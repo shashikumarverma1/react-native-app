@@ -9,7 +9,7 @@ const Apolo = ({ children }: props) => {
 //   const { userDetails } = useContext(GlobalInfo);
   const client = new ApolloClient({
     link: createUploadLink({
-    //   uri: `https://sharedservices.co.in/api/graphql`,
+   
     uri:`http://192.168.1.5:3000/api/graphql`,
 
     }),

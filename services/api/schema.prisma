@@ -20,9 +20,63 @@ model User {
   linkedinId String @default("")
 }
 
-model Page {
-  id        String @id @default(cuid())
-  title     String @default("")
-  articleId String @default("")
-  url       String @default("")
+model MySchool {
+  id                  String    @id @default(cuid())
+  name                String    @default("")
+  teacher             Teacher[] @relation("MySchool_teacher")
+  class               Class[]   @relation("MySchool_class")
+  subject             Subject[] @relation("MySchool_subject")
+  student             Student[] @relation("MySchool_student")
+  from_Teacher_school Teacher[] @relation("Teacher_school")
+  from_Student_school Student[] @relation("Student_school")
+  from_Class_school   Class[]   @relation("Class_school")
+  from_Subject_school Subject[] @relation("Subject_school")
+}
+
+model Teacher {
+  id                    String     @id @default(cuid())
+  name                  String     @default("")
+  school                MySchool?  @relation("Teacher_school", fields: [schoolId], references: [id])
+  schoolId              String?    @map("school")
+  gender                String?    @default("Male")
+  from_MySchool_teacher MySchool[] @relation("MySchool_teacher")
+
+  @@index([schoolId])
+}
+
+model Student {
+  id                    String     @id @default(cuid())
+  name                  String     @default("")
+  class                 Class?     @relation("Student_class", fields: [classId], references: [id])
+  classId               String?    @map("class")
+  subject               Subject[]  @relation("Student_subject")
+  gender                String?    @default("Male")
+  school                MySchool?  @relation("Student_school", fields: [schoolId], references: [id])
+  schoolId              String?    @map("school")
+  from_MySchool_student MySchool[] @relation("MySchool_student")
+
+  @@index([classId])
+  @@index([schoolId])
+}
+
+model Class {
+  id                  String     @id @default(cuid())
+  name                String     @default("")
+  school              MySchool?  @relation("Class_school", fields: [schoolId], references: [id])
+  schoolId            String?    @map("school")
+  from_MySchool_class MySchool[] @relation("MySchool_class")
+  from_Student_class  Student[]  @relation("Student_class")
+
+  @@index([schoolId])
+}
+
+model Subject {
+  id                    String     @id @default(cuid())
+  name                  String     @default("")
+  school                MySchool?  @relation("Subject_school", fields: [schoolId], references: [id])
+  schoolId              String?    @map("school")
+  from_MySchool_subject MySchool[] @relation("MySchool_subject")
+  from_Student_subject  Student[]  @relation("Student_subject")
+
+  @@index([schoolId])
 }

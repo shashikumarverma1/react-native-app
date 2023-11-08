@@ -15,6 +15,8 @@ import { PayNow } from '../screens/PayNow';
 import { AddMoney } from '../screens/AddMoney';
 import { DocumentScaner } from '../functionality/documentScanner';
 
+import SignIn from '../screens/Login';
+
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,7 @@ export const StackNavigation=() =>{
       
       })}
   >
+    <Stack.Screen name="SignIn" component={SignIn} />
        <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile} />

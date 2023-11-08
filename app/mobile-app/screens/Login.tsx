@@ -1,79 +1,65 @@
-import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-class LoginScreen extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      username: '',
-      password: '',
-    };
-  }
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 
-  handleLogin = () => {
-    const { username, password } = this.state;
-   
-    if (username === 'yourusername' && password === 'yourpassword') {
-      
-      alert('Login successful!');
+const SignIn = ({ navigation }: { navigation:any}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignIn = () => {
+    navigation.navigate('Dashboard');
+    // Replace these with your actual email and password
+    const correctEmail = 'user@example.com';
+    const correctPassword = 'password123';
+
+    if (email === correctEmail && password === correctPassword) {
+      // Successful sign-in
+      Alert.alert('Success', 'Sign-in successful!');
     } else {
-     
-      alert('Login failed. Please check your credentials.');
+      // Incorrect email or password
+      Alert.alert('Error', 'Incorrect email or password');
     }
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>Login</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          onChangeText={(text) => this.setState({ username: text })}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={(text) => this.setState({ password: text })}
-        />
-        <TouchableOpacity style={styles.button} onPress={this.handleLogin}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Sign In</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+      />
+      <Button title="Sign In" onPress={handleSignIn} />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   header: {
     fontSize: 24,
     marginBottom: 20,
   },
   input: {
-    width: 300,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 20,
+    width: '80%',
     padding: 10,
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
+    marginBottom: 10,
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
   },
 });
 
-export default LoginScreen;
+export default SignIn;

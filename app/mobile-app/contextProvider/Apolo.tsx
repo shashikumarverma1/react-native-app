@@ -10,7 +10,7 @@ const Apolo = ({ children }: props) => {
   const client = new ApolloClient({
     link: createUploadLink({
    
-    uri:`http://192.168.1.5:3000/api/graphql`,
+    uri:`http://172.18.160.1:3000/api/graphql`,
 
     }),
     cache: new InMemoryCache(),

@@ -14,11 +14,17 @@ import { AddToCart } from '../screens/AddToCart';
 import { PayNow } from '../screens/PayNow';
 import { AddMoney } from '../screens/AddMoney';
 import { DocumentScaner } from '../functionality/documentScanner';
+import { Signin } from '../screens/Signin';
+import { useContext } from 'react';
+import { GlobalInfo } from '../contextProvider/userDetails';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Stack = createStackNavigator();
 
 export const StackNavigation=() =>{
+  const { userDetails ,setUserDetails } = useContext(GlobalInfo);
+   AsyncStorage.getItem(userDetails)
   return (
     <Stack.Navigator
     screenOptions={({ route }) => ({
@@ -28,7 +34,13 @@ export const StackNavigation=() =>{
       
       })}
   >
-       <Stack.Screen name="Dashboard" component={Dashboard} />
+    {/* {
+      !userDetails &&  <Stack.Screen name="Dashboard" component={Dashboard} /> 
+      // : <Stack.Screen name="Signin" component={Signin} />
+
+    } */}
+       <Stack.Screen name="Dashboard" component={Dashboard} /> 
+     
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile} />
     <Stack.Screen name="About" component={About} />

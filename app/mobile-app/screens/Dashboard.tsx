@@ -9,6 +9,7 @@ import { payment } from '../functionality/payment';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQuery } from '@apollo/client';
 import { USER } from '../utils/gql';
+import { Signin } from './Signin';
 
 export const Dashboard=({navigation})=> {
   const [menu , setMenu] = useState(false)
@@ -91,6 +92,7 @@ navigation.navigate('DocumentScaner')
  {/* <ion-icon name="menu-outline"></ion-icon> */}
 
      </View>
+
   )
 }
 

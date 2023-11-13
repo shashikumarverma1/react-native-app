@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export const GlobalInfo = createContext(null);
 const ContextProvider = ({ children }: any) => {
-  const [userDetails, setUserDetails] = useState<any>({name:"ram"});
+  const [userDetails, setUserDetails] = useState<any>(null);
  
   // console.log(children)
 

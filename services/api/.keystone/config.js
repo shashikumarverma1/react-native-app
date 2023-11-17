@@ -23,7 +23,7 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_core3 = require("@keystone-6/core");
+var import_core7 = require("@keystone-6/core");
 
 // auth.ts
 var import_crypto = require("crypto");
@@ -58,7 +58,7 @@ var session = (0, import_session.statelessSessions)({
   secret: sessionSecret
 });
 
-// schema/page.ts
+// schema/class.ts
 var import_core = require("@keystone-6/core");
 var import_fields = require("@keystone-6/core/fields");
 
@@ -67,10 +67,10 @@ function isSignedIn({ session: session2 }) {
   return !!session2;
 }
 
-// schema/page.ts
-var Page = (0, import_core.list)({
+// schema/class.ts
+var Class = (0, import_core.list)({
   ui: {
-    label: "page"
+    label: "Class"
   },
   access: {
     operation: {
@@ -87,16 +87,146 @@ var Page = (0, import_core.list)({
     }
   },
   fields: {
-    title: (0, import_fields.text)(),
-    articleId: (0, import_fields.text)(),
-    url: (0, import_fields.text)({ validation: { isRequired: true } })
+    name: (0, import_fields.text)(),
+    school: (0, import_fields.relationship)({ ref: "MySchool" })
+  }
+});
+
+// schema/myschool.ts
+var import_core2 = require("@keystone-6/core");
+var import_fields2 = require("@keystone-6/core/fields");
+var MySchool = (0, import_core2.list)({
+  ui: {
+    label: "My School"
+  },
+  access: {
+    operation: {
+      create: isSignedIn,
+      query: isSignedIn,
+      update: isSignedIn,
+      delete: isSignedIn
+    }
+  },
+  hooks: {
+    afterOperation: async ({ context, operation, item }) => {
+      if (operation === "create") {
+      }
+    }
+  },
+  fields: {
+    name: (0, import_fields2.text)(),
+    teacher: (0, import_fields2.relationship)({ ref: "Teacher", many: true }),
+    class: (0, import_fields2.relationship)({ ref: "Class", many: true }),
+    subject: (0, import_fields2.relationship)({ ref: "Subject", many: true }),
+    student: (0, import_fields2.relationship)({ ref: "Student", many: true })
+  }
+});
+
+// schema/student.ts
+var import_core3 = require("@keystone-6/core");
+var import_fields3 = require("@keystone-6/core/fields");
+var Student = (0, import_core3.list)({
+  ui: {
+    label: "Student"
+  },
+  access: {
+    operation: {
+      create: isSignedIn,
+      query: isSignedIn,
+      update: isSignedIn,
+      delete: isSignedIn
+    }
+  },
+  hooks: {
+    afterOperation: async ({ context, operation, item }) => {
+      if (operation === "create") {
+      }
+    }
+  },
+  fields: {
+    name: (0, import_fields3.text)(),
+    class: (0, import_fields3.relationship)({ ref: "Class" }),
+    subject: (0, import_fields3.relationship)({ ref: "Subject", many: true }),
+    gender: (0, import_fields3.select)({
+      type: "enum",
+      options: [
+        { label: "Male", value: "Male" },
+        { label: "Female", value: "Female" },
+        { label: "Other", value: "Other" }
+      ],
+      defaultValue: "Male"
+    }),
+    school: (0, import_fields3.relationship)({ ref: "MySchool" })
+  }
+});
+
+// schema/subject.ts
+var import_core4 = require("@keystone-6/core");
+var import_fields4 = require("@keystone-6/core/fields");
+var Subject = (0, import_core4.list)({
+  ui: {
+    label: "Subject"
+  },
+  access: {
+    operation: {
+      create: isSignedIn,
+      query: isSignedIn,
+      update: isSignedIn,
+      delete: isSignedIn
+    }
+  },
+  hooks: {
+    afterOperation: async ({ context, operation, item }) => {
+      if (operation === "create") {
+      }
+    }
+  },
+  fields: {
+    name: (0, import_fields4.text)(),
+    school: (0, import_fields4.relationship)({ ref: "MySchool" })
+  }
+});
+
+// schema/teachers.ts
+var import_core5 = require("@keystone-6/core");
+var import_fields5 = require("@keystone-6/core/fields");
+var Teacher = (0, import_core5.list)({
+  ui: {
+    label: "Teachers"
+  },
+  access: {
+    operation: {
+      create: isSignedIn,
+      query: isSignedIn,
+      update: isSignedIn,
+      delete: isSignedIn
+    }
+  },
+  hooks: {
+    afterOperation: async ({ context, operation, item }) => {
+      if (operation === "create") {
+      }
+    }
+  },
+  fields: {
+    name: (0, import_fields5.text)(),
+    school: (0, import_fields5.relationship)({ ref: "MySchool" }),
+    gender: (0, import_fields5.select)({
+      type: "enum",
+      options: [
+        { label: "Male", value: "Male" },
+        { label: "Female", value: "Female" },
+        { label: "Other", value: "Other" }
+      ],
+      defaultValue: "Male"
+    })
   }
 });
 
 // schema/user.ts
-var import_core2 = require("@keystone-6/core");
-var import_fields2 = require("@keystone-6/core/fields");
-var User = (0, import_core2.list)({
+var import_core6 = require("@keystone-6/core");
+var import_fields6 = require("@keystone-6/core/fields");
+var User = (0, import_core6.list)({
   access: {
     operation: {
       create: () => true,
@@ -106,11 +236,11 @@ var User = (0, import_core2.list)({
     }
   },
   fields: {
-    firstName: (0, import_fields2.text)({ validation: { isRequired: true } }),
-    lastName: (0, import_fields2.text)(),
-    email: (0, import_fields2.text)({ isIndexed: "unique" }),
-    password: (0, import_fields2.password)({ validation: { isRequired: true } }),
-    linkedinId: (0, import_fields2.text)()
+    firstName: (0, import_fields6.text)({ validation: { isRequired: true } }),
+    lastName: (0, import_fields6.text)(),
+    email: (0, import_fields6.text)({ isIndexed: "unique" }),
+    password: (0, import_fields6.password)({ validation: { isRequired: true } }),
+    linkedinId: (0, import_fields6.text)()
   },
   ui: {
     listView: {
@@ -122,12 +252,16 @@ var User = (0, import_core2.list)({
 // schema/index.ts
 var lists = {
   User,
-  Page
+  MySchool,
+  Teacher,
+  Student,
+  Class,
+  Subject
 };
 
 // keystone.ts
 var keystone_default = withAuth(
-  (0, import_core3.config)({
+  (0, import_core7.config)({
     db: {
       // we're using sqlite for the fastest startup experience
       //   for more information on what database might be appropriate for you

@@ -103,49 +103,354 @@ input UserCreateInput {
   linkedinId: String
 }
 
-type Page {
+type MySchool {
   id: ID!
-  title: String
-  articleId: String
-  url: String
+  name: String
+  teacher(where: TeacherWhereInput! = {}, orderBy: [TeacherOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TeacherWhereUniqueInput): [Teacher!]
+  teacherCount(where: TeacherWhereInput! = {}): Int
+  class(where: ClassWhereInput! = {}, orderBy: [ClassOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ClassWhereUniqueInput): [Class!]
+  classCount(where: ClassWhereInput! = {}): Int
+  subject(where: SubjectWhereInput! = {}, orderBy: [SubjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubjectWhereUniqueInput): [Subject!]
+  subjectCount(where: SubjectWhereInput! = {}): Int
+  student(where: StudentWhereInput! = {}, orderBy: [StudentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StudentWhereUniqueInput): [Student!]
+  studentCount(where: StudentWhereInput! = {}): Int
 }
 
-input PageWhereUniqueInput {
+input MySchoolWhereUniqueInput {
   id: ID
 }
 
-input PageWhereInput {
-  AND: [PageWhereInput!]
-  OR: [PageWhereInput!]
-  NOT: [PageWhereInput!]
+input MySchoolWhereInput {
+  AND: [MySchoolWhereInput!]
+  OR: [MySchoolWhereInput!]
+  NOT: [MySchoolWhereInput!]
   id: IDFilter
-  title: StringFilter
-  articleId: StringFilter
-  url: StringFilter
+  name: StringFilter
+  teacher: TeacherManyRelationFilter
+  class: ClassManyRelationFilter
+  subject: SubjectManyRelationFilter
+  student: StudentManyRelationFilter
 }
 
-input PageOrderByInput {
+input TeacherManyRelationFilter {
+  every: TeacherWhereInput
+  some: TeacherWhereInput
+  none: TeacherWhereInput
+}
+
+input ClassManyRelationFilter {
+  every: ClassWhereInput
+  some: ClassWhereInput
+  none: ClassWhereInput
+}
+
+input SubjectManyRelationFilter {
+  every: SubjectWhereInput
+  some: SubjectWhereInput
+  none: SubjectWhereInput
+}
+
+input StudentManyRelationFilter {
+  every: StudentWhereInput
+  some: StudentWhereInput
+  none: StudentWhereInput
+}
+
+input MySchoolOrderByInput {
   id: OrderDirection
-  title: OrderDirection
-  articleId: OrderDirection
-  url: OrderDirection
+  name: OrderDirection
 }
 
-input PageUpdateInput {
-  title: String
-  articleId: String
-  url: String
+input MySchoolUpdateInput {
+  name: String
+  teacher: TeacherRelateToManyForUpdateInput
+  class: ClassRelateToManyForUpdateInput
+  subject: SubjectRelateToManyForUpdateInput
+  student: StudentRelateToManyForUpdateInput
 }
 
-input PageUpdateArgs {
-  where: PageWhereUniqueInput!
-  data: PageUpdateInput!
+input TeacherRelateToManyForUpdateInput {
+  disconnect: [TeacherWhereUniqueInput!]
+  set: [TeacherWhereUniqueInput!]
+  create: [TeacherCreateInput!]
+  connect: [TeacherWhereUniqueInput!]
 }
 
-input PageCreateInput {
-  title: String
-  articleId: String
-  url: String
+input ClassRelateToManyForUpdateInput {
+  disconnect: [ClassWhereUniqueInput!]
+  set: [ClassWhereUniqueInput!]
+  create: [ClassCreateInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input SubjectRelateToManyForUpdateInput {
+  disconnect: [SubjectWhereUniqueInput!]
+  set: [SubjectWhereUniqueInput!]
+  create: [SubjectCreateInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input StudentRelateToManyForUpdateInput {
+  disconnect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  create: [StudentCreateInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+input MySchoolUpdateArgs {
+  where: MySchoolWhereUniqueInput!
+  data: MySchoolUpdateInput!
+}
+
+input MySchoolCreateInput {
+  name: String
+  teacher: TeacherRelateToManyForCreateInput
+  class: ClassRelateToManyForCreateInput
+  subject: SubjectRelateToManyForCreateInput
+  student: StudentRelateToManyForCreateInput
+}
+
+input TeacherRelateToManyForCreateInput {
+  create: [TeacherCreateInput!]
+  connect: [TeacherWhereUniqueInput!]
+}
+
+input ClassRelateToManyForCreateInput {
+  create: [ClassCreateInput!]
+  connect: [ClassWhereUniqueInput!]
+}
+
+input SubjectRelateToManyForCreateInput {
+  create: [SubjectCreateInput!]
+  connect: [SubjectWhereUniqueInput!]
+}
+
+input StudentRelateToManyForCreateInput {
+  create: [StudentCreateInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+type Teacher {
+  id: ID!
+  name: String
+  school: MySchool
+  gender: TeacherGenderType
+}
+
+enum TeacherGenderType {
+  Male
+  Female
+  Other
+}
+
+input TeacherWhereUniqueInput {
+  id: ID
+}
+
+input TeacherWhereInput {
+  AND: [TeacherWhereInput!]
+  OR: [TeacherWhereInput!]
+  NOT: [TeacherWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  school: MySchoolWhereInput
+  gender: TeacherGenderTypeNullableFilter
+}
+
+input TeacherGenderTypeNullableFilter {
+  equals: TeacherGenderType
+  in: [TeacherGenderType!]
+  notIn: [TeacherGenderType!]
+  not: TeacherGenderTypeNullableFilter
+}
+
+input TeacherOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  gender: OrderDirection
+}
+
+input TeacherUpdateInput {
+  name: String
+  school: MySchoolRelateToOneForUpdateInput
+  gender: TeacherGenderType
+}
+
+input MySchoolRelateToOneForUpdateInput {
+  create: MySchoolCreateInput
+  connect: MySchoolWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TeacherUpdateArgs {
+  where: TeacherWhereUniqueInput!
+  data: TeacherUpdateInput!
+}
+
+input TeacherCreateInput {
+  name: String
+  school: MySchoolRelateToOneForCreateInput
+  gender: TeacherGenderType
+}
+
+input MySchoolRelateToOneForCreateInput {
+  create: MySchoolCreateInput
+  connect: MySchoolWhereUniqueInput
+}
+
+type Student {
+  id: ID!
+  name: String
+  class: Class
+  subject(where: SubjectWhereInput! = {}, orderBy: [SubjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubjectWhereUniqueInput): [Subject!]
+  subjectCount(where: SubjectWhereInput! = {}): Int
+  gender: StudentGenderType
+  school: MySchool
+}
+
+enum StudentGenderType {
+  Male
+  Female
+  Other
+}
+
+input StudentWhereUniqueInput {
+  id: ID
+}
+
+input StudentWhereInput {
+  AND: [StudentWhereInput!]
+  OR: [StudentWhereInput!]
+  NOT: [StudentWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  class: ClassWhereInput
+  subject: SubjectManyRelationFilter
+  gender: StudentGenderTypeNullableFilter
+  school: MySchoolWhereInput
+}
+
+input StudentGenderTypeNullableFilter {
+  equals: StudentGenderType
+  in: [StudentGenderType!]
+  notIn: [StudentGenderType!]
+  not: StudentGenderTypeNullableFilter
+}
+
+input StudentOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  gender: OrderDirection
+}
+
+input StudentUpdateInput {
+  name: String
+  class: ClassRelateToOneForUpdateInput
+  subject: SubjectRelateToManyForUpdateInput
+  gender: StudentGenderType
+  school: MySchoolRelateToOneForUpdateInput
+}
+
+input ClassRelateToOneForUpdateInput {
+  create: ClassCreateInput
+  connect: ClassWhereUniqueInput
+  disconnect: Boolean
+}
+
+input StudentUpdateArgs {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateInput!
+}
+
+input StudentCreateInput {
+  name: String
+  class: ClassRelateToOneForCreateInput
+  subject: SubjectRelateToManyForCreateInput
+  gender: StudentGenderType
+  school: MySchoolRelateToOneForCreateInput
+}
+
+input ClassRelateToOneForCreateInput {
+  create: ClassCreateInput
+  connect: ClassWhereUniqueInput
+}
+
+type Class {
+  id: ID!
+  name: String
+  school: MySchool
+}
+
+input ClassWhereUniqueInput {
+  id: ID
+}
+
+input ClassWhereInput {
+  AND: [ClassWhereInput!]
+  OR: [ClassWhereInput!]
+  NOT: [ClassWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  school: MySchoolWhereInput
+}
+
+input ClassOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input ClassUpdateInput {
+  name: String
+  school: MySchoolRelateToOneForUpdateInput
+}
+
+input ClassUpdateArgs {
+  where: ClassWhereUniqueInput!
+  data: ClassUpdateInput!
+}
+
+input ClassCreateInput {
+  name: String
+  school: MySchoolRelateToOneForCreateInput
+}
+
+type Subject {
+  id: ID!
+  name: String
+  school: MySchool
+}
+
+input SubjectWhereUniqueInput {
+  id: ID
+}
+
+input SubjectWhereInput {
+  AND: [SubjectWhereInput!]
+  OR: [SubjectWhereInput!]
+  NOT: [SubjectWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  school: MySchoolWhereInput
+}
+
+input SubjectOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input SubjectUpdateInput {
+  name: String
+  school: MySchoolRelateToOneForUpdateInput
+}
+
+input SubjectUpdateArgs {
+  where: SubjectWhereUniqueInput!
+  data: SubjectUpdateInput!
+}
+
+input SubjectCreateInput {
+  name: String
+  school: MySchoolRelateToOneForCreateInput
 }
 
 """
@@ -160,12 +465,36 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
-  createPage(data: PageCreateInput!): Page
-  createPages(data: [PageCreateInput!]!): [Page]
-  updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
-  updatePages(data: [PageUpdateArgs!]!): [Page]
-  deletePage(where: PageWhereUniqueInput!): Page
-  deletePages(where: [PageWhereUniqueInput!]!): [Page]
+  createMySchool(data: MySchoolCreateInput!): MySchool
+  createMySchools(data: [MySchoolCreateInput!]!): [MySchool]
+  updateMySchool(where: MySchoolWhereUniqueInput!, data: MySchoolUpdateInput!): MySchool
+  updateMySchools(data: [MySchoolUpdateArgs!]!): [MySchool]
+  deleteMySchool(where: MySchoolWhereUniqueInput!): MySchool
+  deleteMySchools(where: [MySchoolWhereUniqueInput!]!): [MySchool]
+  createTeacher(data: TeacherCreateInput!): Teacher
+  createTeachers(data: [TeacherCreateInput!]!): [Teacher]
+  updateTeacher(where: TeacherWhereUniqueInput!, data: TeacherUpdateInput!): Teacher
+  updateTeachers(data: [TeacherUpdateArgs!]!): [Teacher]
+  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
+  deleteTeachers(where: [TeacherWhereUniqueInput!]!): [Teacher]
+  createStudent(data: StudentCreateInput!): Student
+  createStudents(data: [StudentCreateInput!]!): [Student]
+  updateStudent(where: StudentWhereUniqueInput!, data: StudentUpdateInput!): Student
+  updateStudents(data: [StudentUpdateArgs!]!): [Student]
+  deleteStudent(where: StudentWhereUniqueInput!): Student
+  deleteStudents(where: [StudentWhereUniqueInput!]!): [Student]
+  createClass(data: ClassCreateInput!): Class
+  createClasses(data: [ClassCreateInput!]!): [Class]
+  updateClass(where: ClassWhereUniqueInput!, data: ClassUpdateInput!): Class
+  updateClasses(data: [ClassUpdateArgs!]!): [Class]
+  deleteClass(where: ClassWhereUniqueInput!): Class
+  deleteClasses(where: [ClassWhereUniqueInput!]!): [Class]
+  createSubject(data: SubjectCreateInput!): Subject
+  createSubjects(data: [SubjectCreateInput!]!): [Subject]
+  updateSubject(where: SubjectWhereUniqueInput!, data: SubjectUpdateInput!): Subject
+  updateSubjects(data: [SubjectUpdateArgs!]!): [Subject]
+  deleteSubject(where: SubjectWhereUniqueInput!): Subject
+  deleteSubjects(where: [SubjectWhereUniqueInput!]!): [Subject]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -190,9 +519,21 @@ type Query {
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
-  pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
-  page(where: PageWhereUniqueInput!): Page
-  pagesCount(where: PageWhereInput! = {}): Int
+  mySchools(where: MySchoolWhereInput! = {}, orderBy: [MySchoolOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MySchoolWhereUniqueInput): [MySchool!]
+  mySchool(where: MySchoolWhereUniqueInput!): MySchool
+  mySchoolsCount(where: MySchoolWhereInput! = {}): Int
+  teachers(where: TeacherWhereInput! = {}, orderBy: [TeacherOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TeacherWhereUniqueInput): [Teacher!]
+  teacher(where: TeacherWhereUniqueInput!): Teacher
+  teachersCount(where: TeacherWhereInput! = {}): Int
+  students(where: StudentWhereInput! = {}, orderBy: [StudentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: StudentWhereUniqueInput): [Student!]
+  student(where: StudentWhereUniqueInput!): Student
+  studentsCount(where: StudentWhereInput! = {}): Int
+  classes(where: ClassWhereInput! = {}, orderBy: [ClassOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ClassWhereUniqueInput): [Class!]
+  class(where: ClassWhereUniqueInput!): Class
+  classesCount(where: ClassWhereInput! = {}): Int
+  subjects(where: SubjectWhereInput! = {}, orderBy: [SubjectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: SubjectWhereUniqueInput): [Subject!]
+  subject(where: SubjectWhereUniqueInput!): Subject
+  subjectsCount(where: SubjectWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

@@ -12,9 +12,9 @@ import {
 import { document } from '@keystone-6/fields-document';
 import { isSignedIn } from '../utils/acess';
 
-export const Page = list({
+export const Class = list({
   ui: {
-    label: 'page',
+    label: 'Class',
   },
   access: {
     operation: {
@@ -34,9 +34,8 @@ export const Page = list({
     },
   },
   fields: {
-    title: text(),
-     articleId: text(),
-    url: text({ validation: { isRequired: true } }),
+    name: text(),
+    school:relationship({ref:"MySchool"})
     
   },
 });

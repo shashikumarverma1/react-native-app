@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 
 export const StackNavigation=() =>{
   const { userDetails ,setUserDetails } = useContext(GlobalInfo);
-   AsyncStorage.getItem(userDetails)
+  //  AsyncStorage.getItem(userDetails)
   return (
     <Stack.Navigator
     screenOptions={({ route }) => ({
@@ -34,11 +34,11 @@ export const StackNavigation=() =>{
       
       })}
   >
-    {/* {
-      !userDetails &&  <Stack.Screen name="Dashboard" component={Dashboard} /> 
-      // : <Stack.Screen name="Signin" component={Signin} />
-
-    } */}
+    {
+      // !userDetails &&    <Stack.Screen name="Signin" component={Signin} />
+     
+     }
+      <Stack.Screen name="Signin" component={Signin} />
        <Stack.Screen name="Dashboard" component={Dashboard} /> 
      
         <Stack.Screen name="Home" component={Home} />

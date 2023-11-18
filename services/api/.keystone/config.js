@@ -163,6 +163,42 @@ var Student = (0, import_core3.list)({
 // schema/subject.ts
 var import_core4 = require("@keystone-6/core");
 var import_fields4 = require("@keystone-6/core/fields");
+
+// utils/mail.ts
+var nodemailer = require("nodemailer");
+var sendmail = async (from, to, subject) => {
+  let text7 = "This is a test email from Node.js using Nodemailer.";
+  console.log("mail send");
+  const transporter = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "aae229ad4da7c3",
+      pass: "99b506d031a205"
+    }
+  });
+  await transporter.sendMail(
+    {
+      from: "shashikumarverma1996@gmail.com",
+      to: "skantverma1996@gmail.com.com",
+      subject: "Test Email",
+      text: "This is a test email from Node.js using Nodemailer.",
+      html: `<p>Dear Sir/Ma'am</br> `,
+      useHtml: true,
+      attachment: String
+    }
+  );
+};
+var students = async (item) => {
+  console.log(item);
+  await sendmail(
+    "from",
+    "to",
+    "subject"
+  );
+};
+
+// schema/subject.ts
 var Subject = (0, import_core4.list)({
   ui: {
     label: "Subject"
@@ -178,6 +214,8 @@ var Subject = (0, import_core4.list)({
   hooks: {
     afterOperation: async ({ context, operation, item }) => {
       if (operation === "create") {
+        console.log(operation);
+        students(item);
       }
     }
   },

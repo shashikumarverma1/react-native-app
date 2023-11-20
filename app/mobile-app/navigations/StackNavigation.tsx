@@ -18,6 +18,8 @@ import { Signin } from '../screens/Signin';
 import { useContext } from 'react';
 import { GlobalInfo } from '../contextProvider/userDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Signup } from '../screens/Signup';
+import GetStarted from '../screens/GetStarted';
 
 
 const Stack = createStackNavigator();
@@ -38,7 +40,9 @@ export const StackNavigation=() =>{
       // !userDetails &&    <Stack.Screen name="Signin" component={Signin} />
      
      }
-      <Stack.Screen name="Signin" component={Signin} />
+     {/* <Stack.Screen name="GetStarted" component={GetStarted} />
+     <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Signin" component={Signin} /> */}
        <Stack.Screen name="Dashboard" component={Dashboard} /> 
      
         <Stack.Screen name="Home" component={Home} />

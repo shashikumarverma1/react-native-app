@@ -6,105 +6,104 @@ import {
   Pressable,
   Dimensions,
   TextInput,
+  Image,
 } from "react-native";
-const width = Dimensions.get("window").width;
-import { ProductCartInfo } from "../contextProvider/ProductCart";
-import { AmountInfo } from "../contextProvider/Amount";
 import { useMutation } from "@apollo/client";
 import { LOGIN_AUTH } from "../utils/gql";
 import { useNavigation } from "@react-navigation/native";
-import { GlobalInfo } from "../contextProvider/userDetails";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-export const Signin = () => {
-    const { userDetails ,setUserDetails } = useContext(GlobalInfo);
-    const navigate=useNavigation()
+import { GlobalInfo } from "../contextProvider/userDetails";
+
+const width = Dimensions.get("window").width;
+
+export const Signin = ({navigation}: {navigation
+: any}) => {
+  const { userDetails, setUserDetails } = useContext(GlobalInfo);
+  const navigate = useNavigation();
   let logindata = {
     email: "",
     password: "",
+    rememberPassword: false,
   };
 
-  console.log("userDetails" , userDetails , setUserDetails)
   const [loginData, setloginData] = useState(logindata);
 
   const [loginfun, { data }] = useMutation(LOGIN_AUTH, {
-    onCompleted:async(data)=> {
-    
-      console.log(data.authenticateUserWithPassword);
-      if(data.authenticateUserWithPassword.__typename=='UserAuthenticationWithPasswordSuccess'){
-        setUserDetails(data.authenticateUserWithPassword)
-        try {
-            await AsyncStorage.setItem(
-             userDetails,data.authenticateUserWithPassword
-            );
-          } catch (error) {
-            console.log(error)
-          }
-          AsyncStorage.getItem(userDetails)
-//    navigate.navigate("Dashboard")
+    onCompleted: async (data) => {
+      if (data.authenticateUserWithPassword.__typename === 'UserAuthenticationWithPasswordSuccess') {
+        setUserDetails(data.authenticateUserWithPassword);
 
+        try {
+          await AsyncStorage.setItem(
+            userDetails,
+            data.authenticateUserWithPassword
+          );
+        } catch (error) {
+          console.log(error);
+        }
+
+        // navigate.navigate("Dashboard");
+      } else {
+        alert(
+          data.authenticateUserWithPassword.__typename ===
+            'UserAuthenticationWithPasswordFailure'
+            ? "Invalid credentials"
+            : "Something went wrong, please try again"
+        );
       }
-     
-       if(data.authenticateUserWithPassword.__typename=='"UserAuthenticationWithPasswordFailure"'){
-        alert("invalid credentiel")
-        } else{
-        alert("something went wrong please try again")
-      }
-   
     },
   });
-  
-  console.log(loginData);
-  const handalLogin = async() => {
-    console.log("login");
-   await loginfun({
+
+  const handalLogin = async () => {
+    await loginfun({
       variables: {
         email: loginData.email,
         password: loginData.password,
       },
     });
   };
+
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
-      <View
-      // style={{flex:1 , justifyContent:'center'}}
-      >
+      <View style={styles.logoContainer}>
+        {/* Use your logo image */}
+        <Image
+            source={require('../assets/schoollogo.png')}
+            style={styles.logo}
+            resizeMode="contain" />
+      </View>
+      <View style={styles.inputContainer}>
         <TextInput
-          // style={styles.input}
+          style={styles.input}
           onChangeText={(e) =>
             setloginData({
               ...loginData,
               email: e,
             })
           }
-          // value={number}
-          placeholder="email"
+          placeholder="Email"
           keyboardType="email-address"
         />
         <TextInput
-          // style={styles.input}
+          style={styles.input}
           onChangeText={(e) =>
             setloginData({
               ...loginData,
               password: e,
             })
           }
-          // value={number}
-          placeholder="password"
-          keyboardType="default"
+          placeholder="Password"
+          secureTextEntry={true}
         />
+       
       </View>
       <Pressable onPress={() => handalLogin()}>
-        <Text
-          style={{
-            textAlign: "center",
-            color: "red",
-            backgroundColor: "green",
-            padding: 15,
-          }}
-        >
-          submit
-        </Text>
+        <View style={styles.submitButton}>
+          <Text style={styles.submitButtonText}>Signin</Text>
+        </View>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate("Signup")} >
+        <Text style={styles.signupButton}>Don't have an account? Sign Up</Text>
       </Pressable>
     </View>
   );
@@ -113,26 +112,42 @@ export const Signin = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    marginLeft: 10,
     paddingTop: 20,
-    // height:'110%',
+    padding:50
   },
-  menuItem: {
-    fontSize: 20,
-    fontWeight: "bold",
-    paddingLeft: 10,
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+    marginTop:180
   },
-  Card: {
-    paddingVertical: 5,
-    marginVertical: 5,
-    paddingHorizontal: 5,
-    marginHorizontal: 5,
-    flex: 0.3,
+  logo: {
+    width: 100, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+  },
+  inputContainer: {
+    marginBottom: 20,
+    marginTop:50
+  },
+  input: {
     borderWidth: 1,
-    borderColor: "#dddddd",
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    borderTopLeftRadius: 4,
-    borderTopRightRadius: 4,
+    borderColor: "#ccc",
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 50,
+  },
+  submitButton: {
+    backgroundColor: "skyblue",
+    padding: 15,
+    alignItems: "center",
+    borderRadius: 50,
+  },
+  submitButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  signupButton: {
+    color: "blue",
+    marginTop: 10,
+    textAlign: "center",
   },
 });

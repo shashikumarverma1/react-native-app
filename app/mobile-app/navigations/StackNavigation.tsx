@@ -38,7 +38,7 @@ export const StackNavigation=() =>{
       // !userDetails &&    <Stack.Screen name="Signin" component={Signin} />
      
      }
-      <Stack.Screen name="Signin" component={Signin} />
+      {/* <Stack.Screen name="Signin" component={Signin} /> */}
        <Stack.Screen name="Dashboard" component={Dashboard} /> 
      
         <Stack.Screen name="Home" component={Home} />

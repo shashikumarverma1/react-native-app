@@ -3,7 +3,7 @@ import { Pressable, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
-  HeaderBackButton,
+
 } from '@react-navigation/stack';
 import { Home } from '../screens/Home';
 import { Dashboard } from '../screens/Dashboard';
@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 
 export const StackNavigation=() =>{
   const { userDetails ,setUserDetails } = useContext(GlobalInfo);
-  //  AsyncStorage.getItem(userDetails)
+  //  console.log(AsyncStorage.getItem(userDetails))
   return (
     <Stack.Navigator
     screenOptions={({ route }) => ({
@@ -35,11 +35,11 @@ export const StackNavigation=() =>{
       })}
   >
     {
-      // !userDetails &&    <Stack.Screen name="Signin" component={Signin} />
+      userDetails ?    <Stack.Screen name="Signin" component={Signin} /> : <Stack.Screen name="Dashboard" component={Dashboard} /> 
      
      }
       {/* <Stack.Screen name="Signin" component={Signin} /> */}
-       <Stack.Screen name="Dashboard" component={Dashboard} /> 
+      
      
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Profile" component={Profile} />

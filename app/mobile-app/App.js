@@ -7,11 +7,12 @@ import ContextProviderProductCart from './contextProvider/ProductCart'
 import ContextProviderAmount from './contextProvider/Amount'
 import Orders from './contextProvider/Orders';
 import Apolo from './contextProvider/Apolo';
+import AgeProvider from './contextProvider/AgeProvider'
 export default function App() {
 
   return (
     <Orders>
-
+<AgeProvider>
    <Apolo>
     <ContextProviderAmount>
 <ContextProvider>  
@@ -21,6 +22,7 @@ export default function App() {
     </ContextProvider>
     </ContextProviderAmount>
     </Apolo>
+    </AgeProvider>
     </Orders>
   )
 }

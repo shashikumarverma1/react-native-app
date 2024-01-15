@@ -3,10 +3,12 @@ import { StyleSheet, Text, View , Pressable, Dimensions } from 'react-native';
 import { TextInput } from "react-native-gesture-handler";
 import { AmountInfo } from "../contextProvider/Amount";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { AgeInfo } from "../contextProvider/AgeProvider";
 export const  AddMoney=({navigation})=> {
 const [num, setnum]=useState(0)
 const {Amount, setAmount} = useContext(AmountInfo)
-// console.log(num + 1)
+// const [age , setAge]=useContext(AgeInfo)
+// console.log(age , setAge)
   return (
     <View style={[styles.container, {
       display:'flex' , justifyContent:'center' , flexDirection:'row', alignItems:'center'

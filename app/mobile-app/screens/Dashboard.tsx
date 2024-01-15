@@ -10,12 +10,14 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useQuery } from '@apollo/client';
 import { USER } from '../utils/gql';
 import { Signin } from './Signin';
+import { AgeInfo } from '../contextProvider/AgeProvider';
 
 export const Dashboard=({navigation})=> {
   const [menu , setMenu] = useState(false)
   const {ProductCart, setProductCart } = useContext(ProductCartInfo)
   const {Amount, setAmount} = useContext(AmountInfo)
   const [productData , setproductData] = useState([])
+
 
   const {data} =useQuery(USER)
   console.log(data , "user")
